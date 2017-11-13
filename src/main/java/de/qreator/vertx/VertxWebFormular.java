@@ -23,23 +23,23 @@ public class VertxWebFormular {
 
         Router router = Router.router(vertx);
 
-        router.route("/").handler(routingContext -> {
-            HttpServerResponse response = routingContext.response();
-            response.putHeader("content-type", "text/plain");
-            response.end("Gib in der Adresszeile den Pfad \"daten\" oder \"produkte/Werkzeuge/Hammer\" oder \"static/index.html\" oder \"static/formular.html\" ein.");
-        });
 
         
         router.route("/anfrage").handler(routingContext -> {
             String typ = routingContext.request().getParam("typ");
             String name = routingContext.request().getParam("name");
+            String name1 = routingContext.request().getParam("name2");
             HttpServerResponse response = routingContext.response();
             response.putHeader("content-type", "application/json");
             JsonObject jo = new JsonObject();
 
             if (typ.equals("namenKnopf")) {
                 jo.put("typ", "antwort");
-                jo.put("text", "Der Text war " + name);
+                if (name1=="yeay"){
+                jo.put("text", "Der Text war " + name +" und das passwort ist gültig "+ name1);
+                }else{
+                jo.put("text", "Der Text war " + name +"und das passwort ist ungültig ");    
+                }
             }
             response.end(Json.encodePrettily(jo));
         });
@@ -49,20 +49,7 @@ public class VertxWebFormular {
         router.route("/static/*").handler(StaticHandler.create().setDefaultContentEncoding("UTF-8"));
 
         // alle Anfragen, die mit /daten beginnen werden von diesem Handler beantwortet
-        router.route("/daten").handler(routingContext -> {
-            HttpServerResponse response = routingContext.response();
-            response.putHeader("content-type", "text/plain");
-            response.end("Hier eine Nachricht vom Unterpfad \"/daten\"!");
-        });
-
-        // alle Anfragen der Form /produkte/Werkzeuge/Hammer1  werden von diesem Handler beantwortet
-        router.route("/produkte/:produktTyp/:produktID").handler(routingContext -> {
-            String produktTyp = routingContext.request().getParam("produktTyp");
-            String produktID = routingContext.request().getParam("produktID");
-            HttpServerResponse response = routingContext.response();
-            response.putHeader("content-type", "text/plain");
-            response.end("Die ProduktID ist " + produktID + " und der Produkttyp ist " + produktTyp);
-        });
+        
 
         // router::accept akzeptiert eine Anfrage und leitet diese an den Router weiter
         server.requestHandler(router::accept).listen(8080);
