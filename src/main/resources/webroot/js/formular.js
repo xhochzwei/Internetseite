@@ -3,10 +3,18 @@ $(document).ready(function () {
         $.ajax({url:"../anfrage", data:
                 {
                     typ: "namenKnopf",
-                    name: $("#eingabeName").val()
+                    name: $("#eingabeName").val(), 
+                    
+                    //typ: "namenKnopf",
+                    name2: $("#pwt").val()
                 },
                 success: function (data) {
-                    $("body").append("<div>Daten: " + data.text+"<div>");
+                    if(data.angemeldet==false){ 
+                        $("body").append("<div>Daten: " + data.text+"<div>");
+                    }else if(data.angemeldet==true){
+                        $("body").append("<div>Daten: " + data.text+"<div>");
+                       //$("body").html(type="button" id="ausloggKnopf" value="OK");
+                    } 
                 }
             });
     });

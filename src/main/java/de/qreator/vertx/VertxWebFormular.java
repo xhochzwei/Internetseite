@@ -32,14 +32,23 @@ public class VertxWebFormular {
             HttpServerResponse response = routingContext.response();
             response.putHeader("content-type", "application/json");
             JsonObject jo = new JsonObject();
+            String Passwort="yeay";
+            String user="Jan";
+            //Boolean angemeldet= Boolean.FALSE;
+            
 
             if (typ.equals("namenKnopf")) {
                 jo.put("typ", "antwort");
-                if (name1=="yeay"){
-                jo.put("text", "Der Text war " + name +" und das passwort ist gültig "+ name1);
+                if (name1.equals(Passwort)&& name.equals(user)){
+                jo.put("text", "Der Name war " + name +" und das passwort ist gültig "+ name1);
+                jo.put("angemeldet",true);
+                
+                
+                
                 }else{
-                jo.put("text", "Der Text war " + name +"und das passwort ist ungültig ");    
-                }
+                jo.put("text", "Name oder Passwort ist ungültig ");    
+                jo.put("angemeldet",false);
+               }
             }
             response.end(Json.encodePrettily(jo));
         });
