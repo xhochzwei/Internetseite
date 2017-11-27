@@ -22,7 +22,7 @@ public class VertxWebFormular {
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
-
+        
 
         
         router.route("/anfrage").handler(routingContext -> {
@@ -35,6 +35,9 @@ public class VertxWebFormular {
             String Passwort="yeay";
             String user="Jan";
             //Boolean angemeldet= Boolean.FALSE;
+            
+            
+            
             
 
             if (typ.equals("namenKnopf")) {
@@ -64,3 +67,4 @@ public class VertxWebFormular {
         server.requestHandler(router::accept).listen(8080);
     }
 }
+//http://localhost:8080/static/formular.html
