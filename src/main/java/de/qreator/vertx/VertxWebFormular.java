@@ -22,9 +22,7 @@ public class VertxWebFormular {
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
-        
-
-        
+     
         
         
         router.route("/anfrage").handler(routingContext -> {
